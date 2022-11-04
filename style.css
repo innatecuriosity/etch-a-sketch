@@ -1,3 +1,32 @@
+.dashboard {
+    display:flex;
+
+}
+.toggles {
+    margin-block: 0;
+    padding-inline: 0;
+    list-style: none;
+    width: 30%;
+}
+
+.paintboard {
+    display: flex;
+    width: 70%;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.paintbucket {
+    flex: 0 1 1; 
+    margin: 4px; height: 24px; 
+    width: 24px; 
+    border-radius: 50%;
+    border-width: 2px;
+    border-color:black;
+    border-style:groove;
+}
+
 .field {
     display: flex;
     width: 100%; 
@@ -10,6 +39,9 @@
     border:solid;
     background-color: gray;
 
+.dashboard {
+    display: flex;
+}
 
 }
 .row {
