@@ -1,14 +1,14 @@
 //functions
 
 function changePixelColor(pixel) {
-    pixel.style.cssText = "background-color:" + paint + ";";
+    if (mouseKey || holdTog) pixel.style.cssText = "background-color:" + paint + ";";
     return NaN;
 }
 
 function updateSettings() {
     cols = colsCount.value;
     rows = rowsCount.value;
-    holdTog = holdToggle.value;
+    holdTog = holdToggle.checked;
 }
 
 //cosnturct field
@@ -33,9 +33,7 @@ function constructField() {
             row.appendChild(pixel);
             pixel.cssText = "grid-row-start:"+i+"; grid-column-start:"+j+";"
             // add event listener
-            pixel.addEventListener("mouseover", function(event) {
-                if (holdTog){changePixelColor(event.target)};
-            })             
+            pixel.addEventListener("mouseover", function(event) {changePixelColor(event.target);});
         }
         field.appendChild(row);
     }
@@ -49,6 +47,8 @@ let paint = "black";
 let holdTog = true;
 let paintList = ["black", "white", "purple", "blue", "green", "yellow", "orange", "red"];
 
+
+
 const rowsCount = document.getElementById("rows");
 const colsCount = document.getElementById("cols");
 const holdToggle = document.getElementById("hold_input");
@@ -60,8 +60,12 @@ confirm.addEventListener("click", () => {
 
 rowsCount.value = rows;
 colsCount.value = cols;
-holdToggle.value = holdTog
+holdToggle.checked = holdTog
 
+let mouseKey = false;
+const body = document.querySelector("body");
+body.addEventListener("mousedown", () => mouseKey=true);
+body.addEventListener("mouseup", () => mouseKey=false);
 
 //consturct paintboard
 const paintboard = document.querySelector(".paintboard");
