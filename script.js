@@ -5,15 +5,65 @@ function changePixelColor(pixel) {
     return NaN;
 }
 
+function updateSettings() {
+    cols = colsCount.value;
+    rows = rowsCount.value;
+    holdTog = holdToggle.value;
+}
+
+//cosnturct field
+function constructField() {
+
+    const field = document.createElement("div");
+    field.classList = "field";
+    field.setAttribute("id","field");
+    field.style.cssText = "";
+    document.querySelector("body").appendChild(field);
+    for (let i = 0; i<rows; i++){
+        const row = document.createElement("div");
+        row.classList = "row";
+        row.style.cssText = "display:flex; flex:1 1 0"
+        row.setAttribute("id","row"+i)
+
+        // add 16 pixels per row
+        for (let j=0; j<cols; j++){
+            const pixel = document.createElement("div");
+            pixel.setAttribute("id", "r"+i+"c"+j);
+            pixel.classList= "pixel";
+            row.appendChild(pixel);
+            pixel.cssText = "grid-row-start:"+i+"; grid-column-start:"+j+";"
+            // add event listener
+            pixel.addEventListener("mouseover", function(event) {
+                if (holdTog){changePixelColor(event.target)};
+            })             
+        }
+        field.appendChild(row);
+    }
+}
 //----------------------------------MAIN--------------------------------------
 
-//create squares
+//initialization
 let rows = 16;
 let cols = 16;
 let paint = "black";
-let holdToggle = true;
+let holdTog = true;
 let paintList = ["black", "white", "purple", "blue", "green", "yellow", "orange", "red"];
 
+const rowsCount = document.getElementById("rows");
+const colsCount = document.getElementById("cols");
+const holdToggle = document.getElementById("hold_input");
+const confirm = document.getElementById("confirmButton");
+confirm.addEventListener("click", () => {
+    updateSettings();
+    field.remove();
+    constructField()})
+
+rowsCount.value = rows;
+colsCount.value = cols;
+holdToggle.value = holdTog
+
+
+//consturct paintboard
 const paintboard = document.querySelector(".paintboard");
 
     for (color of paintList) {
@@ -30,29 +80,6 @@ const paintboard = document.querySelector(".paintboard");
         })
         paintboard.appendChild(paintBucket);
     }
+//construct default field
+constructField()
 
-//const rowsCount = document.querySelector("");
-//const colsCount = document.querySelector("");
-
-const field = document.querySelector(".field");
-field.style.cssText = "";
-for (let i = 0; i<rows; i++){
-    const row = document.createElement("div");
-    row.classList = "row";
-    row.style.cssText = "display:flex; flex:1 1 0"
-    row.setAttribute("id","row"+i)
-
-    // add 16 pixels per row
-    for (let j=0; j<cols; j++){
-        const pixel = document.createElement("div");
-        pixel.setAttribute("id", "r"+i+"c"+j);
-        pixel.classList= "pixel";
-        row.appendChild(pixel);
-        pixel.cssText = "grid-row-start:"+i+"; grid-column-start:"+j+";"
-        // add event listener
-        pixel.addEventListener("mouseover", function(event) {changePixelColor(event.target)})    
-        
-    }
-
-    field.appendChild(row);
-}
